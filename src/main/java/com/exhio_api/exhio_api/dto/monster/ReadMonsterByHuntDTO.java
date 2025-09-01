@@ -5,24 +5,21 @@ import com.exhio_api.exhio_api.domain.Resistances;
 import com.exhio_api.exhio_api.dto.hunt.ReadHuntByMonsterDTO;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
-public record ReadMonsterDTO(
+public record ReadMonsterByHuntDTO(
         Long id,
         String name,
         Integer level,
         Integer experience,
-        Resistances resistances,
-        Set<ReadHuntByMonsterDTO> hunts
+        Resistances resistances
 ) {
-    public ReadMonsterDTO(Monster monster) {
+    public ReadMonsterByHuntDTO(Monster monster) {
         this(
                 monster.getId(),
                 monster.getName(),
                 monster.getLevel(),
                 monster.getExperience(),
-                monster.getResistances(),
-                monster.getHunts().stream().map(ReadHuntByMonsterDTO::new).collect(Collectors.toSet())
+                monster.getResistances()
         );
     }
 }

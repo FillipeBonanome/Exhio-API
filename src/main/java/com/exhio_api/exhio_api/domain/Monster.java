@@ -12,6 +12,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -38,6 +41,9 @@ public class Monster {
     @Embedded
     @Valid
     Resistances resistances;
+
+    @ManyToMany(mappedBy = "monsters")
+    Set<Hunt> hunts = new HashSet<>();
 
     private Boolean deleted;
 

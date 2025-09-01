@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,6 +30,7 @@ class MonsterTest {
                 "Sapo",
                 23,
                 new Resistances(0,0,-20,20,40,30,20),
+                new HashSet<>(),
                 false
         );
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
@@ -129,7 +131,7 @@ class MonsterTest {
     }
 
     @Test
-    @DisplayName("Should change level successfulyy")
+    @DisplayName("Should change level successfully")
     public void shouldChangeLevelSuccessfully() {
         monster.setLevel(15);
         assertEquals(15, monster.getLevel());

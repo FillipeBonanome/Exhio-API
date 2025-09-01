@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface MonsterRepository extends JpaRepository<Monster, Long> {
     Page<Monster> findAllByDeletedFalse(Pageable pageable);
     Monster findByIdAndDeletedFalse(Long id);
+    Boolean existsByName(String name);
+    Monster getReferenceByName(String name);
 }
