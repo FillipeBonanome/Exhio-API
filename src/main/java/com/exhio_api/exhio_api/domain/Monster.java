@@ -32,6 +32,7 @@ public class Monster {
     private Integer level;
 
     @NotBlank
+
     private String name;
 
     @NotNull
