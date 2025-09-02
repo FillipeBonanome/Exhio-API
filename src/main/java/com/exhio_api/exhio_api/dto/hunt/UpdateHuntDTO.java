@@ -8,6 +8,7 @@ public record UpdateHuntDTO(
         String recommendedLevel,
         String videoURL,
         Boolean premium,
-        Set<String> monsters
+        Set<String> monsters,
+        Set<String> vocations
 ) {
 }

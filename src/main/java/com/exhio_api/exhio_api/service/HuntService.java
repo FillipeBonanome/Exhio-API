@@ -2,12 +2,14 @@ package com.exhio_api.exhio_api.service;
 
 import com.exhio_api.exhio_api.domain.Hunt;
 import com.exhio_api.exhio_api.domain.Monster;
+import com.exhio_api.exhio_api.domain.Vocation;
 import com.exhio_api.exhio_api.dto.hunt.CreateHuntByMonsterIdDTO;
 import com.exhio_api.exhio_api.dto.hunt.CreateHuntByMonsterNameDTO;
 import com.exhio_api.exhio_api.dto.hunt.ReadHuntDTO;
 import com.exhio_api.exhio_api.dto.hunt.UpdateHuntDTO;
 import com.exhio_api.exhio_api.repository.HuntRepository;
 import com.exhio_api.exhio_api.repository.MonsterRepository;
+import com.exhio_api.exhio_api.repository.VocationRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class HuntService {
 
     @Autowired
     private MonsterRepository monsterRepository;
+
+    @Autowired
+    private VocationRepository vocationRepository;
 
     public List<ReadHuntDTO> getHunts() {
         List<Hunt> hunts = huntRepository.findAllByDeletedFalse();
@@ -51,6 +56,16 @@ public class HuntService {
                 hunt.getMonsters().add(monster);
             }
         }
+
+        if(huntDTO.vocations() != null && !huntDTO.vocations().isEmpty()) {
+            for(String name : huntDTO.vocations()) {
+                if(vocationRepository.existsByName(name)) {
+                    Vocation vocation = vocationRepository.getReferenceByName(name);
+                    hunt.getVocations().add(vocation);
+                }
+            }
+        }
+
         Hunt savedHunt = huntRepository.save(hunt);
         return new ReadHuntDTO(savedHunt);
     }
@@ -68,6 +83,17 @@ public class HuntService {
                 }
             }
         }
+
+        if(huntDTO.vocations() != null && !huntDTO.vocations().isEmpty()) {
+            hunt.setVocations(new HashSet<>());
+            for(String name : huntDTO.vocations()) {
+                if(vocationRepository.existsByName(name)) {
+                    Vocation vocation = vocationRepository.getReferenceByName(name);
+                    hunt.getVocations().add(vocation);
+                }
+            }
+        }
+
         Hunt savedHunt = huntRepository.save(hunt);
         return new ReadHuntDTO(savedHunt);
 

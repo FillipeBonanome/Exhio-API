@@ -45,7 +45,13 @@ public class Hunt {
     )
     private Set<Monster> monsters = new HashSet<>();
 
-    //Recommended vocations
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "vocation_hunt",
+            joinColumns = @JoinColumn(name = "hunt_id"),
+            inverseJoinColumns = @JoinColumn(name = "vocation_id")
+    )
+    Set<Vocation> vocations = new HashSet<>();
     //Quests
 
     @Column(name = "video_url")

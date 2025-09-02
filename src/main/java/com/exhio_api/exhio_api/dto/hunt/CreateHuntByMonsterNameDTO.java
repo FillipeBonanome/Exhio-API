@@ -15,6 +15,7 @@ public record CreateHuntByMonsterNameDTO(
         String videoURL,
         @NotNull
         Boolean premium,
-        Set<String> monsters
+        Set<String> monsters,
+        Set<String> vocations
 ) {
 }

@@ -42,7 +42,7 @@ public class Monster {
     @Valid
     Resistances resistances;
 
-    @ManyToMany(mappedBy = "monsters")
+    @ManyToMany(mappedBy = "monsters", fetch = FetchType.LAZY)
     Set<Hunt> hunts = new HashSet<>();
 
     private Boolean deleted;

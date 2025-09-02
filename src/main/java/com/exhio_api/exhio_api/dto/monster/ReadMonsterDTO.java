@@ -2,7 +2,7 @@ package com.exhio_api.exhio_api.dto.monster;
 
 import com.exhio_api.exhio_api.domain.Monster;
 import com.exhio_api.exhio_api.domain.Resistances;
-import com.exhio_api.exhio_api.dto.hunt.ReadHuntByMonsterDTO;
+import com.exhio_api.exhio_api.dto.hunt.ReadSimpleHuntDTO;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -13,7 +13,7 @@ public record ReadMonsterDTO(
         Integer level,
         Integer experience,
         Resistances resistances,
-        Set<ReadHuntByMonsterDTO> hunts
+        Set<ReadSimpleHuntDTO> hunts
 ) {
     public ReadMonsterDTO(Monster monster) {
         this(
@@ -22,7 +22,7 @@ public record ReadMonsterDTO(
                 monster.getLevel(),
                 monster.getExperience(),
                 monster.getResistances(),
-                monster.getHunts().stream().map(ReadHuntByMonsterDTO::new).collect(Collectors.toSet())
+                monster.getHunts().stream().map(ReadSimpleHuntDTO::new).collect(Collectors.toSet())
         );
     }
 }
