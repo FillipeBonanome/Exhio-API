@@ -3,6 +3,7 @@ package com.exhio_api.exhio_api.service;
 import com.exhio_api.exhio_api.domain.Vocation;
 import com.exhio_api.exhio_api.dto.vocations.CreateVocationDTO;
 import com.exhio_api.exhio_api.dto.vocations.ReadVocationDTO;
+import com.exhio_api.exhio_api.dto.vocations.UpdateVocationDTO;
 import com.exhio_api.exhio_api.repository.VocationRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,18 @@ public class VocationService {
 
     public ReadVocationDTO registerVocation(@Valid CreateVocationDTO vocationDTO) {
         Vocation vocation = new Vocation(vocationDTO);
+        Vocation savedVocation = vocationRepository.save(vocation);
+        return new ReadVocationDTO(savedVocation);
+    }
+
+    public ReadVocationDTO getVocationById(Long id) {
+        Vocation vocation = vocationRepository.getReferenceById(id);
+        return new ReadVocationDTO(vocation);
+    }
+
+    public ReadVocationDTO updateVocation(Long id, @Valid UpdateVocationDTO vocationDTO) {
+        Vocation vocation = vocationRepository.getReferenceById(id);
+        vocation.updateData(vocationDTO);
         Vocation savedVocation = vocationRepository.save(vocation);
         return new ReadVocationDTO(savedVocation);
     }

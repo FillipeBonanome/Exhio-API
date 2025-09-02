@@ -1,6 +1,7 @@
 package com.exhio_api.exhio_api.domain;
 
 import com.exhio_api.exhio_api.dto.vocations.CreateVocationDTO;
+import com.exhio_api.exhio_api.dto.vocations.UpdateVocationDTO;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -39,5 +40,17 @@ public class Vocation {
         this.name = vocationDTO.name();
         this.description = vocationDTO.description();
         this.stats = vocationDTO.stats();
+    }
+
+    public void updateData(@Valid UpdateVocationDTO vocationDTO) {
+        if (vocationDTO.name() != null) {
+            this.name = vocationDTO.name();
+        }
+        if (vocationDTO.stats() != null) {
+            this.stats = vocationDTO.stats();
+        }
+        if (vocationDTO.description() != null) {
+            this.description = vocationDTO.description();
+        }
     }
 }
