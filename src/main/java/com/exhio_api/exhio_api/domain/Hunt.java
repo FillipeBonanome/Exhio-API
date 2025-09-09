@@ -52,7 +52,9 @@ public class Hunt {
             inverseJoinColumns = @JoinColumn(name = "vocation_id")
     )
     Set<Vocation> vocations = new HashSet<>();
-    //Quests
+
+    @OneToMany(mappedBy = "hunt", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<Quest> quests = new HashSet<>();
 
     @Column(name = "video_url")
     private String videoURL;

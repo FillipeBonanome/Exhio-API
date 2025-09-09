@@ -3,6 +3,7 @@ package com.exhio_api.exhio_api.dto.hunt;
 import com.exhio_api.exhio_api.domain.Hunt;
 import com.exhio_api.exhio_api.dto.monster.ReadMonsterByHuntDTO;
 import com.exhio_api.exhio_api.dto.monster.ReadMonsterDTO;
+import com.exhio_api.exhio_api.dto.quest.ReadSimpleQuestDTO;
 import com.exhio_api.exhio_api.dto.vocations.ReadSimpleVocationDTO;
 
 import java.util.Set;
@@ -16,7 +17,8 @@ public record ReadHuntDTO(
         String videoURL,
         Boolean premium,
         Set<ReadMonsterByHuntDTO> monsters,
-        Set<ReadSimpleVocationDTO> vocations
+        Set<ReadSimpleVocationDTO> vocations,
+        Set<ReadSimpleQuestDTO> quests
 ) {
     public ReadHuntDTO(Hunt hunt) {
         this(
@@ -27,7 +29,8 @@ public record ReadHuntDTO(
                 hunt.getVideoURL(),
                 hunt.getPremium(),
                 hunt.getMonsters().stream().map(ReadMonsterByHuntDTO::new).collect(Collectors.toSet()),
-                hunt.getVocations().stream().map(ReadSimpleVocationDTO::new).collect(Collectors.toSet())
+                hunt.getVocations().stream().map(ReadSimpleVocationDTO::new).collect(Collectors.toSet()),
+                hunt.getQuests().stream().map(ReadSimpleQuestDTO::new).collect(Collectors.toSet())
         );
     }
 }
