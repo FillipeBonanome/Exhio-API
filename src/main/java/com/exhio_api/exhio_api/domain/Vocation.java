@@ -32,7 +32,9 @@ public class Vocation {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "vocations")
     private Set<Hunt> hunts = new HashSet<>();
 
-    //Spell list
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "vocations")
+    private Set<Spell> spells = new HashSet<>();
+
     @Embedded
     private Stats stats;
 
