@@ -2,6 +2,7 @@ package com.exhio_api.exhio_api.controller;
 
 import com.exhio_api.exhio_api.dto.quest.CreateQuestDTO;
 import com.exhio_api.exhio_api.dto.quest.ReadQuestDTO;
+import com.exhio_api.exhio_api.dto.quest.UpdateQuestDTO;
 import com.exhio_api.exhio_api.service.QuestService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,12 @@ public class QuestController {
     @Transactional
     public ResponseEntity<ReadQuestDTO> registerQuest(@RequestBody @Valid CreateQuestDTO questDTO) {
         return ResponseEntity.ok(questService.registerQuest(questDTO));
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<ReadQuestDTO> updateQuest(@PathVariable(name = "id")Long id, @RequestBody UpdateQuestDTO questDTO) {
+        return ResponseEntity.ok(questService.updateQuest(id, questDTO));
     }
 
     @DeleteMapping("/{id}")

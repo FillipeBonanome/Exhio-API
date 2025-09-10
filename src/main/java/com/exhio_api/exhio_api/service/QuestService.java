@@ -4,6 +4,7 @@ import com.exhio_api.exhio_api.domain.Hunt;
 import com.exhio_api.exhio_api.domain.Quest;
 import com.exhio_api.exhio_api.dto.quest.CreateQuestDTO;
 import com.exhio_api.exhio_api.dto.quest.ReadQuestDTO;
+import com.exhio_api.exhio_api.dto.quest.UpdateQuestDTO;
 import com.exhio_api.exhio_api.repository.HuntRepository;
 import com.exhio_api.exhio_api.repository.QuestRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -50,5 +51,16 @@ public class QuestService {
 
     public void deleteQuestById(Long id) {
         questRepository.deleteById(id);
+    }
+
+    public ReadQuestDTO updateQuest(Long id, UpdateQuestDTO questDTO) {
+        Quest quest = questRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Quest not found"));
+        quest.update(questDTO);
+        if(questDTO.huntId() != null) {
+            Hunt hunt = huntRepository.findById(questDTO.huntId()).orElseThrow(() -> new EntityNotFoundException("Hunt not found"));
+            quest.setHunt(hunt);
+        }
+        Quest savedQuest = questRepository.save(quest);
+        return new ReadQuestDTO(savedQuest);
     }
 }

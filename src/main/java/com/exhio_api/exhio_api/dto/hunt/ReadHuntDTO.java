@@ -1,8 +1,8 @@
 package com.exhio_api.exhio_api.dto.hunt;
 
 import com.exhio_api.exhio_api.domain.Hunt;
-import com.exhio_api.exhio_api.dto.monster.ReadMonsterByHuntDTO;
-import com.exhio_api.exhio_api.dto.monster.ReadMonsterDTO;
+import com.exhio_api.exhio_api.dto.dungeon.ReadDungeonDTO;
+import com.exhio_api.exhio_api.dto.monster.ReadSimpleMonsterDTO;
 import com.exhio_api.exhio_api.dto.quest.ReadSimpleQuestDTO;
 import com.exhio_api.exhio_api.dto.vocations.ReadSimpleVocationDTO;
 
@@ -16,9 +16,10 @@ public record ReadHuntDTO(
         String recommendedLevel,
         String videoURL,
         Boolean premium,
-        Set<ReadMonsterByHuntDTO> monsters,
+        Set<ReadSimpleMonsterDTO> monsters,
         Set<ReadSimpleVocationDTO> vocations,
-        Set<ReadSimpleQuestDTO> quests
+        Set<ReadSimpleQuestDTO> quests,
+        Set<ReadDungeonDTO> dungeons
 ) {
     public ReadHuntDTO(Hunt hunt) {
         this(
@@ -28,9 +29,10 @@ public record ReadHuntDTO(
                 hunt.getRecommendedLevel(),
                 hunt.getVideoURL(),
                 hunt.getPremium(),
-                hunt.getMonsters().stream().map(ReadMonsterByHuntDTO::new).collect(Collectors.toSet()),
+                hunt.getMonsters().stream().map(ReadSimpleMonsterDTO::new).collect(Collectors.toSet()),
                 hunt.getVocations().stream().map(ReadSimpleVocationDTO::new).collect(Collectors.toSet()),
-                hunt.getQuests().stream().map(ReadSimpleQuestDTO::new).collect(Collectors.toSet())
+                hunt.getQuests().stream().map(ReadSimpleQuestDTO::new).collect(Collectors.toSet()),
+                hunt.getDungeons().stream().map(ReadDungeonDTO::new).collect(Collectors.toSet())
         );
     }
 }

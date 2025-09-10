@@ -32,7 +32,6 @@ public class Monster {
     private Integer level;
 
     @NotBlank
-
     private String name;
 
     @NotNull
@@ -45,6 +44,9 @@ public class Monster {
 
     @ManyToMany(mappedBy = "monsters", fetch = FetchType.LAZY)
     Set<Hunt> hunts = new HashSet<>();
+
+    @ManyToMany(mappedBy = "monsters", fetch = FetchType.LAZY)
+    Set<Dungeon> dungeons = new HashSet<>();
 
     private Boolean deleted;
 

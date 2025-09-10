@@ -1,6 +1,7 @@
 package com.exhio_api.exhio_api.domain;
 
 import com.exhio_api.exhio_api.dto.quest.CreateQuestDTO;
+import com.exhio_api.exhio_api.dto.quest.UpdateQuestDTO;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -50,5 +51,26 @@ public class Quest {
         this.itemReward = questDTO.itemReward();
         this.trainingReward = questDTO.trainingReward();
         this.attributeRewards = questDTO.attributeRewards();
+    }
+
+    public void update(UpdateQuestDTO questDTO) {
+        if(questDTO.name() != null && !questDTO.name().isBlank()) {
+            this.name = questDTO.name();
+        }
+        if(questDTO.requiredLevel() != null) {
+            this.requiredLevel = questDTO.requiredLevel();
+        }
+        if(questDTO.moneyReward() != null) {
+            this.moneyReward = questDTO.moneyReward();
+        }
+        if(questDTO.itemReward() != null && !questDTO.itemReward().isBlank()) {
+            this.itemReward = questDTO.itemReward();
+        }
+        if(questDTO.trainingReward() != null) {
+            this.trainingReward = questDTO.trainingReward();
+        }
+        if(questDTO.attributeRewards() != null) {
+            this.attributeRewards = questDTO.attributeRewards();
+        }
     }
 }

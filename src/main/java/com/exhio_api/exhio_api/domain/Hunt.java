@@ -56,6 +56,9 @@ public class Hunt {
     @OneToMany(mappedBy = "hunt", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Quest> quests = new HashSet<>();
 
+    @OneToMany(mappedBy = "hunt", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<Dungeon> dungeons = new HashSet<>();
+
     @Column(name = "video_url")
     private String videoURL;
     @NotNull
