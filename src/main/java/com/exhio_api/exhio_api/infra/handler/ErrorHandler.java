@@ -50,4 +50,9 @@ public class ErrorHandler {
         return ResponseEntity.badRequest().body(new FieldValidationDTO(exception.getMessage()));
     }
 
+    @ExceptionHandler(PermissionException.class)
+    public ResponseEntity<FieldValidationDTO> handlePermissionException(PermissionException exception) {
+        return ResponseEntity.badRequest().body(new FieldValidationDTO(exception.getMessage()));
+    }
+
 }

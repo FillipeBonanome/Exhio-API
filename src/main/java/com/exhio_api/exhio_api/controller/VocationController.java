@@ -40,7 +40,5 @@ public class VocationController {
     public ResponseEntity<ReadVocationDTO> updateVocation(@PathVariable(name = "id") Long id, @RequestBody @Valid UpdateVocationDTO vocationDTO) {
         return ResponseEntity.ok(vocationService.updateVocation(id, vocationDTO));
     }
-    
-
 
 }
