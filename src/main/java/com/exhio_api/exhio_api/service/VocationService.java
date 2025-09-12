@@ -4,6 +4,7 @@ import com.exhio_api.exhio_api.domain.Vocation;
 import com.exhio_api.exhio_api.dto.vocations.CreateVocationDTO;
 import com.exhio_api.exhio_api.dto.vocations.ReadVocationDTO;
 import com.exhio_api.exhio_api.dto.vocations.UpdateVocationDTO;
+import com.exhio_api.exhio_api.infra.exception.VocationException;
 import com.exhio_api.exhio_api.repository.VocationRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class VocationService {
     }
 
     public ReadVocationDTO registerVocation(@Valid CreateVocationDTO vocationDTO) {
+        if(vocationRepository.existsByName(vocationDTO.name())) {
+            throw new VocationException("Vocation name must be unique");
+        }
         Vocation vocation = new Vocation(vocationDTO);
         Vocation savedVocation = vocationRepository.save(vocation);
         return new ReadVocationDTO(savedVocation);
@@ -34,6 +38,12 @@ public class VocationService {
     }
 
     public ReadVocationDTO updateVocation(Long id, @Valid UpdateVocationDTO vocationDTO) {
+        if(vocationDTO.name() != null && vocationRepository.existsByName(vocationDTO.name())) {
+            throw new VocationException("Vocation name must be unique");
+        }
+        if(vocationDTO.name() != null && vocationDTO.name().isBlank()) {
+            throw new VocationException("Vocation name must not be blank");
+        }
         Vocation vocation = vocationRepository.getReferenceById(id);
         vocation.updateData(vocationDTO);
         Vocation savedVocation = vocationRepository.save(vocation);

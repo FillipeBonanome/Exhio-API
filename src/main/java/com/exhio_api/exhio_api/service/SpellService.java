@@ -5,6 +5,7 @@ import com.exhio_api.exhio_api.domain.Vocation;
 import com.exhio_api.exhio_api.dto.spell.CreateSpellDTO;
 import com.exhio_api.exhio_api.dto.spell.ReadSpellDTO;
 import com.exhio_api.exhio_api.dto.spell.UpdateSpellDTO;
+import com.exhio_api.exhio_api.infra.exception.SpellException;
 import com.exhio_api.exhio_api.repository.SpellRepository;
 import com.exhio_api.exhio_api.repository.VocationRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -32,7 +33,7 @@ public class SpellService {
     }
 
     public ReadSpellDTO getById(Long id) {
-        Spell spell = spellRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Spell not found"));
+        Spell spell = spellRepository.findById(id).orElseThrow(() -> new SpellException("Spell not found"));
         return new ReadSpellDTO(spell);
     }
 
@@ -49,7 +50,7 @@ public class SpellService {
     }
 
     public ReadSpellDTO updateSpell(Long id, UpdateSpellDTO spellDTO) {
-        Spell spell = spellRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Spell not found"));
+        Spell spell = spellRepository.findById(id).orElseThrow(() -> new SpellException("Spell not found"));
         spell.update(spellDTO);
         if(spellDTO.vocations() != null) {
             spell.setVocations(new HashSet<>());

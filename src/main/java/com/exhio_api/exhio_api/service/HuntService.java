@@ -7,17 +7,16 @@ import com.exhio_api.exhio_api.dto.hunt.CreateHuntByMonsterIdDTO;
 import com.exhio_api.exhio_api.dto.hunt.CreateHuntByMonsterNameDTO;
 import com.exhio_api.exhio_api.dto.hunt.ReadHuntDTO;
 import com.exhio_api.exhio_api.dto.hunt.UpdateHuntDTO;
+import com.exhio_api.exhio_api.infra.exception.HuntException;
 import com.exhio_api.exhio_api.repository.HuntRepository;
 import com.exhio_api.exhio_api.repository.MonsterRepository;
 import com.exhio_api.exhio_api.repository.VocationRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class HuntService {
@@ -109,7 +108,7 @@ public class HuntService {
     public ReadHuntDTO getHuntById(Long id) {
         Hunt hunt = huntRepository.getReferenceByIdAndDeletedFalse(id);
         if(hunt == null) {
-            throw new EntityNotFoundException("Hunt não encontrada");
+            throw new HuntException("Hunt not found");
         }
         return new ReadHuntDTO(hunt);
     }

@@ -5,6 +5,7 @@ import com.exhio_api.exhio_api.domain.Quest;
 import com.exhio_api.exhio_api.dto.quest.CreateQuestDTO;
 import com.exhio_api.exhio_api.dto.quest.ReadQuestDTO;
 import com.exhio_api.exhio_api.dto.quest.UpdateQuestDTO;
+import com.exhio_api.exhio_api.infra.exception.QuestException;
 import com.exhio_api.exhio_api.repository.HuntRepository;
 import com.exhio_api.exhio_api.repository.QuestRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -29,11 +30,11 @@ public class QuestService {
     }
 
     public ReadQuestDTO registerQuest(@Valid CreateQuestDTO questDTO) {
-        Hunt hunt = huntRepository.findById(questDTO.huntId()).orElseThrow(() -> new EntityNotFoundException("Hunt not found for quest"));
+        Hunt hunt = huntRepository.findById(questDTO.huntId()).orElseThrow(() -> new QuestException("Hunt not found for quest"));
         //Change exception
         if(questDTO.moneyReward() == null && questDTO.trainingReward() == null && questDTO.itemReward() == null) {
             if(questDTO.attributeRewards() == null || questDTO.attributeRewards().isEmpty()) {
-                throw new EntityNotFoundException("A quest always have some reward");
+                throw new QuestException("A quest always have some reward");
             }
         }
 
@@ -54,10 +55,10 @@ public class QuestService {
     }
 
     public ReadQuestDTO updateQuest(Long id, UpdateQuestDTO questDTO) {
-        Quest quest = questRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Quest not found"));
+        Quest quest = questRepository.findById(id).orElseThrow(() -> new QuestException("Quest not found"));
         quest.update(questDTO);
         if(questDTO.huntId() != null) {
-            Hunt hunt = huntRepository.findById(questDTO.huntId()).orElseThrow(() -> new EntityNotFoundException("Hunt not found"));
+            Hunt hunt = huntRepository.findById(questDTO.huntId()).orElseThrow(() -> new QuestException("Hunt not found"));
             quest.setHunt(hunt);
         }
         Quest savedQuest = questRepository.save(quest);

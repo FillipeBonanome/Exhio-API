@@ -4,6 +4,7 @@ import com.exhio_api.exhio_api.domain.Monster;
 import com.exhio_api.exhio_api.dto.monster.CreateMonsterDTO;
 import com.exhio_api.exhio_api.dto.monster.ReadMonsterDTO;
 import com.exhio_api.exhio_api.dto.monster.UpdateMonsterDTO;
+import com.exhio_api.exhio_api.infra.exception.MonsterException;
 import com.exhio_api.exhio_api.repository.MonsterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,11 +28,20 @@ public class MonsterService {
     }
 
     public ReadMonsterDTO registerMonster(CreateMonsterDTO monster) {
+        if(monsterRepository.existsByName(monster.name())) {
+            throw new MonsterException("Monster's name must be unique'");
+        }
         Monster savedMonster = monsterRepository.save(new Monster(monster));
         return new ReadMonsterDTO(savedMonster);
     }
 
     public ReadMonsterDTO updateMonster(Long id, UpdateMonsterDTO monsterDTO) {
+        if(monsterDTO.name() != null && monsterRepository.existsByName(monsterDTO.name())) {
+            throw new MonsterException("Monster's name must be unique.");
+        }
+        if(monsterDTO.name() != null && monsterDTO.name().isBlank()) {
+            throw new MonsterException("Monster's name must not be blank");
+        }
         Monster monster = monsterRepository.getReferenceById(id);
         monster.updateData(monsterDTO);
         Monster savedMonster = monsterRepository.save(monster);
