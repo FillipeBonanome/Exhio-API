@@ -2,10 +2,7 @@ package com.exhio_api.exhio_api.infra.handler;
 
 import com.exhio_api.exhio_api.dto.validation.FieldValidationDTO;
 import com.exhio_api.exhio_api.dto.validation.ValidationErrorDTO;
-import com.exhio_api.exhio_api.infra.exception.DungeonException;
-import com.exhio_api.exhio_api.infra.exception.HuntException;
-import com.exhio_api.exhio_api.infra.exception.QuestException;
-import com.exhio_api.exhio_api.infra.exception.SpellException;
+import com.exhio_api.exhio_api.infra.exception.*;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -45,6 +42,11 @@ public class ErrorHandler {
 
     @ExceptionHandler(SpellException.class)
     public ResponseEntity<FieldValidationDTO> handleSpellException(SpellException exception) {
+        return ResponseEntity.badRequest().body(new FieldValidationDTO(exception.getMessage()));
+    }
+
+    @ExceptionHandler(UserException.class)
+    public ResponseEntity<FieldValidationDTO> handleUserException(UserException exception) {
         return ResponseEntity.badRequest().body(new FieldValidationDTO(exception.getMessage()));
     }
 

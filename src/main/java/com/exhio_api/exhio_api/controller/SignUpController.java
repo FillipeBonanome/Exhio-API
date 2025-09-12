@@ -24,7 +24,6 @@ public class SignUpController {
     @PostMapping
     @Transactional
     public ResponseEntity<ReadUserDTO> registerUser(@RequestBody @Valid CreateUserDTO userDTO, UriComponentsBuilder uriBuilder) throws Exception {
-        System.out.println(userDTO.password());
         ReadUserDTO user = userService.registerUser(userDTO);
         return ResponseEntity.created(uriBuilder.path("/user/id").buildAndExpand(user.id()).toUri()).body(user);
     }
