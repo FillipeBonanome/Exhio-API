@@ -121,7 +121,7 @@
 			<plugin>
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
-				<version>10.14.0</version>
+				<version>11.12.0</version>
 				<configuration>
 					<url>jdbc:mysql://localhost/exhio_wiki_api</url>
 					<user>${env.MYSQL_USER}</user>
