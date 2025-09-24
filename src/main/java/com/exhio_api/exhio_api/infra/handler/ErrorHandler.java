@@ -5,7 +5,6 @@ import com.exhio_api.exhio_api.dto.validation.ValidationErrorDTO;
 import com.exhio_api.exhio_api.infra.exception.*;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
